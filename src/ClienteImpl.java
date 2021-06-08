@@ -10,15 +10,16 @@ public class ClienteImpl {
 
 		BufferedReader teclado = new BufferedReader(new InputStreamReader(System.in));
 
-		// pede o nome do cliente
-		System.out.println("Informe o nome do cliente: ");
-		String nome_cliente = teclado.readLine();
+		for (int i = 0; i < 2; i++) {
+			System.out.println("Informe o nome do cliente: ");
+			String nome_cliente = teclado.readLine();
 
-		System.out.println("Informe o saldo inicial: ");
-		double saldo = Double.parseDouble(teclado.readLine());
+			System.out.println("Informe o saldo inicial: ");
+			double saldo = Double.parseDouble(teclado.readLine());
 
-		Conta c = b.abrirConta(saldo, nome_cliente);
-		System.out.println("Titular:" + c.obterTitular());
-		System.out.println("Saldo:" + c.obterSaldo());
+			Conta c = b.abrirConta(saldo, nome_cliente);
+			System.out.println("Titular:" + c.obterTitular());
+			System.out.println("Saldo:" + c.obterSaldo());
+		}
 	}
 }

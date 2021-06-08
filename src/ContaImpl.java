@@ -23,8 +23,7 @@ public class ContaImpl extends UnicastRemoteObject implements Conta {
 	public String obterTitular() throws RemoteException {
 		return titular;
 	}
-
-	// retornar mensagem a cada operação
+	
 	public void creditarValor(double valor) throws RemoteException {
 		saldo = saldo + valor;
 
@@ -36,7 +35,7 @@ public class ContaImpl extends UnicastRemoteObject implements Conta {
 			System.out.println("Saldo insuficiente!");
 		}
 		else {
-			saldo = saldo - valor;
+			saldo -= valor;
 
 			exibirDados("Débito", valor);
 		}
@@ -44,6 +43,8 @@ public class ContaImpl extends UnicastRemoteObject implements Conta {
 
 	public void aplicarCorrecao(double indice) throws RemoteException {
 		saldo = saldo + (saldo * (indice / 100));
+		
+		exibirDados2("Correção");
 	}
 
 	public void transferirValor(double valor, Conta c) throws RemoteException {
@@ -54,10 +55,11 @@ public class ContaImpl extends UnicastRemoteObject implements Conta {
 	}
 
 	public void encerrarConta() throws RemoteException, MalformedURLException, NotBoundException {
+		exibirDados2("Encerramento");
 		Naming.unbind("Número da conta: " + numero);
 	}
 
-	public int getNumero() {
+	public int obterNumero() {
 		return numero;
 	}
 
@@ -68,15 +70,22 @@ public class ContaImpl extends UnicastRemoteObject implements Conta {
 	public String getTitular() {
 		return titular;
 	}
-
+	
 	public void setTitular(String titular) {
 		this.titular = titular;
 	}
 	
-	private void exibirDados(String operacao, double valor) throws RemoteException {
+	public void exibirDados2(String operacao) throws RemoteException {
+		System.out.println(operacao);
 		System.out.println("Número da conta: " + numero);
 		System.out.println("Titular: " + obterTitular());
-		System.out.println("Saldo: " + obterSaldo());
-		System.out.println(operacao + " de: R$" + valor);
+		System.out.println("Saldo: " + obterSaldo());		
+	}
+	
+	private void exibirDados(String operacao, double valor) throws RemoteException {
+		System.out.println(operacao + " de: R$" + valor + System.getProperty("line.separator"));
+		System.out.println("Número da conta: " + numero);
+		System.out.println("Titular: " + obterTitular());
+		System.out.println("Saldo: " + obterSaldo());		
 	}
 }

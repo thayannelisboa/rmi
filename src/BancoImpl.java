@@ -13,7 +13,7 @@ public class BancoImpl extends UnicastRemoteObject implements Banco {
 
 	public Conta abrirConta(double saldo, String titular) throws RemoteException, MalformedURLException {
 		Conta c = new ContaImpl(saldo, titular, ultimaConta);
-
+		
 		Naming.rebind("Conta" + ultimaConta, c); // registra conta
 		System.out.println("Conta " + ultimaConta + " criada com sucesso!");
 		System.out.println("Titular " + c.obterTitular());
