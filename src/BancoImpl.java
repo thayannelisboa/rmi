@@ -14,8 +14,8 @@ public class BancoImpl extends UnicastRemoteObject implements Banco {
 	public Conta abrirConta(double saldo, String titular) throws RemoteException, MalformedURLException {
 		Conta c = new ContaImpl(saldo, titular, ultimaConta);
 
-		Naming.rebind("Conta " + ultimaConta, c); // registra conta
-		System.out.println("Conta " + ultimaConta + "foi criada com sucesso!");
+		Naming.rebind("Conta" + ultimaConta, c); // registra conta
+		System.out.println("Conta " + ultimaConta + " criada com sucesso!");
 		System.out.println("Titular " + c.obterTitular());
 		System.out.println("Saldo " + c.obterSaldo());
 
@@ -27,6 +27,6 @@ public class BancoImpl extends UnicastRemoteObject implements Banco {
 	public static void main(String[] args) throws RemoteException, MalformedURLException {
 		Banco b = new BancoImpl();
 		Naming.rebind("Nubank", b); // registra o banco
-		System.out.println("O Banco est√° ativo!");
+		System.out.println("O Banco est· ativo!");
 	}
 }

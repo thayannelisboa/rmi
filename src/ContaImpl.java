@@ -24,14 +24,11 @@ public class ContaImpl extends UnicastRemoteObject implements Conta {
 		return titular;
 	}
 
-	// retornar mensagem a cada operaÃ§Ã£o
+	// retornar mensagem a cada operação
 	public void creditarValor(double valor) throws RemoteException {
 		saldo = saldo + valor;
 
-		System.out.println("NÃºmero da conta: " + numero);
-		System.out.println("Titular: " + obterTitular());
-		System.out.println("Saldo: " + obterSaldo());
-		System.out.println("CrÃ©dito de: " + valor);
+		exibirDados("Crédito", valor);
 	}
 
 	public void debitarValor(double valor) throws RemoteException {
@@ -40,10 +37,8 @@ public class ContaImpl extends UnicastRemoteObject implements Conta {
 		}
 		else {
 			saldo = saldo - valor;
-			System.out.println("NÃºmero da conta: " + numero);
-			System.out.println("Titular: " + obterTitular());
-			System.out.println("Saldo: " + obterSaldo());
-			System.out.println("DÃ©bito de: " + valor);
+
+			exibirDados("Débito", valor);
 		}
 	}
 
@@ -54,10 +49,12 @@ public class ContaImpl extends UnicastRemoteObject implements Conta {
 	public void transferirValor(double valor, Conta c) throws RemoteException {
 		this.debitarValor(valor);
 		c.creditarValor(valor);
+		
+		exibirDados("Transferência", valor);
 	}
 
 	public void encerrarConta() throws RemoteException, MalformedURLException, NotBoundException {
-		Naming.unbind("NÃºmero da conta: " + numero);
+		Naming.unbind("Número da conta: " + numero);
 	}
 
 	public int getNumero() {
@@ -74,5 +71,12 @@ public class ContaImpl extends UnicastRemoteObject implements Conta {
 
 	public void setTitular(String titular) {
 		this.titular = titular;
+	}
+	
+	private void exibirDados(String operacao, double valor) throws RemoteException {
+		System.out.println("Número da conta: " + numero);
+		System.out.println("Titular: " + obterTitular());
+		System.out.println("Saldo: " + obterSaldo());
+		System.out.println(operacao + " de: R$" + valor);
 	}
 }
